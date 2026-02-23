@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Starlign Capital — Grow Your Wealth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <!-- Terms and Conditions Modal -->
+  <div id="termsModal" class="terms-modal">
+    <div class="terms-modal-content">
+      <h2>Terms and Conditions</h2>
+      <div class="terms-body">
+        <p>Welcome to Starlign Capital. Please read and agree to our terms and conditions before using our platform. These terms are designed to ensure transparency, clarity, and mutual understanding between you and our platform.</p>
+        
+        <h3>1. Investment Platform Overview and Purpose</h3>
+        <p>Starlign Capital is a comprehensive investment platform designed to help individuals and groups achieve their financial goals through various investment opportunities. Our platform operates with the primary objective of providing transparent, user-friendly investment solutions. We are committed to maintaining clear communication and providing regular updates on your investment performance. When you join Starlign Capital, you become part of a community of investors working towards financial growth and stability.</p>
+        
+        <h3>2. Understanding Investment Potential and Outcomes</h3>
+        <p>As an investment platform, Starlign Capital facilitates opportunities for potential gains. You understand and acknowledge that:</p>
+        <ul>
+          <li>You have the opportunity to earn profits and returns on your investments</li>
+          <li>Market conditions may result in periods where your investments experience changes in value</li>
+          <li>Investment outcomes are influenced by multiple factors including market dynamics, economic conditions, and asset performance</li>
+          <li>Past performance does not guarantee future results</li>
+          <li>All investment decisions carry elements of uncertainty and market-related factors</li>
+          <li>The investment landscape is dynamic and subject to various influencing factors</li>
+        </ul>
+        
+        <h3>3. Personal Responsibility and Independent Decision-Making</h3>
+        <p>I hereby declare that I am investing in Starlign Invest of my own freewill and independent decision-making capacity. I confirm that I have carefully considered the investment opportunity and i am comfortable with my decision to proceed. I understand that investment outcomes depend on various market factors and conditions. I take responsibility for my investment decisions and acknowledge that these decisions are made with my full understanding of the investment landscape. I recognize that Starlign Capital operates within an environment where market conditions, economic factors, and global events can influence investment performance. While Stalone Invest implements professional management and monitoring of investments, external factors beyond any platform's control may influence results.</p>
+        
+        <h3>4. Capital Preservation and Drawdown Policy</h3>
+        <p>Starlign Capital recognizes the importance of capital preservation and has implemented protective measures for our investors. In the event that an investment account experiences a significant drawdown, Starlign Capital will work to return a reasonable portion of the original investment capital. Our commitment is to minimize losses during challenging market periods and provide support through various protective mechanisms. These measures reflect our dedication to protecting investor interests while acknowledging that market conditions can sometimes be unfavorable. We aim to balance growth opportunities with prudent risk management practices.</p>
+        
+        <h3>5. Market Dynamics and Investment Volatility</h3>
+        <p>I acknowledge that investment markets are dynamic and subject to fluctuations. I understand that:
+        <ul>
+          <li>Markets experience periods of growth and periods of adjustment</li>
+          <li>Market volatility is a natural part of the investment landscape</li>
+          <li>Various economic factors influence investment performance</li>
+          <li>Diversification and professional management help mitigate certain risks</li>
+          <li>Long-term investing approaches generally help navigate short-term market movements</li>
+        </ul>
+        </p>
+        
+        <h3>6. Investor Learning and Experience</h3>
+        <p>I understand that investing is a learning experience. Should my investment returns be lower than expected or should I experience periods where my investment value fluctuates, I recognize this as a normal part of the investment journey. Starlign Capital provides educational resources and support to help investors understand market dynamics and make informed decisions. I am committed to learning about investment principles and market conditions to enhance my investment knowledge over time.</p>
+        
+        <h3>7. Professional Management and Platform Operations</h3>
+        <p>Starlign Capital operates with professional management and oversight. Our team works diligently to identify investment opportunities and manage portfolios according to established strategies. While we implement professional practices and risk management protocols, investment outcomes are ultimately influenced by market conditions and broader economic factors. We remain committed to transparency in our operations and regular communication with our investors regarding their investment status and market conditions.</p>
+        
+        <h3>8. Assumption of Investment Risk</h3>
+        <p>I acknowledge that I am participating in investment activities that carry inherent market risk. I understand that investment decisions are made with the acceptance that results may vary from expectations. I take responsibility for my decision to invest in Starlign Capital and recognize that while our team provides professional management, market-related factors may impact returns. Starlign Capital operates within the framework of market realities, and I accept the conditions that come with investment participation.</p>
+        
+        <h3>9. Communication and Updates</h3>
+        <p>Starlign Capital commits to providing regular updates and communication regarding investment performance and market conditions. I understand that I will receive periodic reports on my investment status and relevant market information. Should there be periods of lower returns or market challenges, Starlign Capital will maintain transparency and keep me informed about these developments and any relevant actions being taken.</p>
+        
+        <h3>10. Compliance and Regulatory Understanding</h3>
+        <p>I understand that Starlign Capital operates within applicable regulatory frameworks and industry standards. I am aware that investment activities are subject to various regulations and that our platform is committed to maintaining compliance with relevant legal requirements. I acknowledge responsibility for understanding any tax implications or regulatory considerations related to my investment.</p>
+        
+        <h3>11. Mutual Agreement and Acknowledgment</h3>
+        <p>By clicking "I Agree" below, I confirm that:</p>
+        <ul>
+          <li>I have thoroughly read and understood these terms and conditions</li>
+          <li>I fully acknowledge the nature of investment and associated market realities</li>
+          <li>I am investing of my own freewill and with sound judgment and understanding</li>
+          <li>I take responsibility for my investment decisions and their outcomes</li>
+          <li>I recognize that while Starlign Capital provides professional management, investment results are subject to market conditions</li>
+          <li>I accept the conditions and circumstances that accompany investment participation</li>
+          <li>I commit to maintaining realistic expectations regarding investment returns over time</li>
+          <li>I understand that this agreement represents a mutual understanding between myself and Starlign Capital regarding investment participation</li>
+        </ul>
+        
+        <h3>12. Long-Term Commitment and Investment Philosophy</h3>
+        <p>I recognize that successful investing typically involves a long-term perspective. I understand that short-term market fluctuations are normal and do not necessarily indicate problems with Starlign Capital's management or strategy. I commit to maintaining a balanced view of investment performance and understanding that investments benefit from patience and consistent participation over extended periods.</p>
+      </div>
+      <div class="terms-buttons">
+        <button id="agreeBtn" class="btn terms-agree" onclick="acceptTerms()">I Agree</button>
+        <button id="declineBtn" class="btn terms-decline" onclick="declineTerms()">I Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <header>
+   <h1> <img src="starlign.png" id="logo">
+    STARLIGN</h1>
+   <nav class="nav-menu">
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#invest">Invest</a>
+  <a href="#" id="adminLoginLink" class="admin-link">Admin</a>
+</nav>
+
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h2>Grow Your Wealth with Confidence</h2>
+      <p>Join thousands of investors earning monthly profits with Starlign Capital. Your money works for you, securely and transparently.</p>
+      <button class="btn" onclick="document.getElementById('invest').scrollIntoView({ behavior: 'smooth' });">Get Started</button>
+    </div>
+    
+    </section>
+ 
+  <div id="announcementDisplay" class="announcement-banner">
+    <!-- Announcements will be displayed here -->
+  </div>
+
+  <div id="numberDisplay" class="number-display-box">
+    <!-- Numbers will be displayed here -->
+  </div>
+
+<div class="hero-section">
+  <video class="background-video" autoplay muted loop>
+    <source src="market2.mp4" type="video/mp4">
+  </video>
+</div>
+  <section class="form-section" id="invest">
+    <h2>Make an Investment</h2>
+    <form id="paymentForm">
+      <label>Full Name</label>
+      <input type="text" id="name" required>
+
+      <label>Email</label>
+      <input type="email" id="email" required>
+
+      <label>Phone Number</label>
+      <input type="tel" id="phone" required>
+
+      <label>Account Name</label>
+      <input type="text" id="accountName" required>
+
+      <label>Account Number</label>
+      <input type="text" id="accountNumber" required>
+
+      <label>Bank Name</label>
+      <input type="text" id="bankName" required>
+
+      <label>Amount (₦)</label>
+      <input type="number" id="amount" value="30000" readonly required>
+
+      <button type="submit" class="btn">Invest Now</button>
+    </form>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <h2>About Starlign Capital</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>Starlign Capital is Nigeria's leading investment platform, dedicated to helping individuals grow their wealth through smart, secure investment opportunities. Founded in 2025, we have helped thousands of investors achieve financial freedom.</p>
+          <p>Our platform combines cutting-edge technology with expert financial analysis to provide you with the best investment opportunities in the market. We prioritize security, transparency, and customer satisfaction above all else.</p>
+          
+          <h3>Why Choose Starlign Capital?</h3>
+          <ul class="why-choose-list">
+            <li> Licensed and regulated investment platform</li>
+            <li> Bank-level security with SSL encryption</li>
+            <li> Transparent fee structure with no hidden charges</li>
+            <li> Professional fund management team</li>
+            <li> 24/7 customer support</li>
+            <li> Monthly profit distributions</li>
+            <li> Risk management policies in place</li>
+            <li> Easy online investment process</li>
+          </ul>
+          
+          <div class="trust-indicators">
+            <div class="indicator">
+              <h4>🔒 Secure Platform</h4>
+              <p>Bank-level security with SSL encryption</p>
+            </div>
+            <div class="indicator">
+              <h4>📊 Transparent</h4>
+              <p>Real-time reporting and updates</p>
+            </div>
+            <div class="indicator">
+              <h4>🎯 Expert Management</h4>
+              <p>Professional fund managers</p>
+            </div>
+          </div>
+        </div>
+        <div class="stats">
+        
+          <div class="stat">
+            <h3>5,000+</h3>
+            <p>Vision of Satisfied Investors</p>
+          </div>
+          <div class="stat">
+            <h3>85%</h3>
+            <p>Success Rate</p>
+          </div>
+          <div class="stat">
+            <h3>3 Years</h3>
+            <p>Experience</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admin Login Modal -->
+  <div id="adminModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Admin Login</h2>
+      <form id="adminLoginForm">
+        <label>Username:</label>
+        <input type="text" id="adminUsername" required>
+        
+        <label>Password:</label>
+        <input type="password" id="adminPassword" required>
+        
+        <button type="submit" class="btn">Login</button>
+        <div id="loginError" class="error-message" style="display: none;"></div>
+      </form>
+    </div>
+  </div>
+
+  <section class="admin-dashboard" id="admin" style="display: none;">
+    <h2>Admin Dashboard</h2>
+    <div class="admin-container">
+      <div class="admin-controls">
+        <h3>Number Display Settings</h3>
+        <div class="control-group">
+          <label>Content to Display:</label>
+          <input type="text" id="adminNumberDisplay" placeholder="Enter number or text to display">
+          <button id="updateNumber" class="btn admin-btn">Update Display</button>
+        </div>
+
+        <div class="admin-buttons">
+          <button id="logoutBtn" class="btn admin-btn danger">Logout</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Admin Login Modal -->
+<section class="admin-dashboard" id="admin">
+  <div class="admin-header">
+    <h2>Admin Dashboard</h2>
+    <button id="logoutBtn" class="btn danger">Logout</button>
+  </div>
+
+  <div class="admin-card">
+    <h3>Homepage Number Display</h3>
+    <p>Update the number or text shown on the homepage.</p>
+
+    <input
+      type="text"
+      id="adminNumberDisplay"
+      placeholder="Enter number or text"
+    />
+
+    <button id="updateNumber" class="btn admin-btn">
+      Update Display
+    </button>
+  </div>
+</section>
+
+
+  <footer>
+    <div class="footer-icons">
+      <a href="mailto:contact@starligncapital.com" class="footer-icon">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100091333883101" target="_blank" class="footer-icon">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://wa.me/message/WH7RYFIZSVYIN1" target="_blank" class="footer-icon">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
+    <p> Starlign Capital. Secure Wealth Growth for Everyone</p>
+  </footer>
+
+  <!-- Paystack Script -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script src="index.js"></script>
+  </body>
+  </html>
+  
