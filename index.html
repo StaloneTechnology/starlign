@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starlign - Financial Investment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Dark mode colors (default) */
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --bg-tertiary: #141414;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: #222222;
+            --border-light: #333333;
+            --glass-bg: rgba(10, 10, 10, 0.95);
+            --vignette-gradient: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0,0,0,0.5) 100%);
+            --input-bg: rgba(10, 10, 10, 0.8);
+            --input-disabled: rgba(20, 20, 20, 0.5);
+            --btn-closed: #1a1a1a;
+            --terms-bg: rgba(5, 5, 5, 0.9);
+            --countdown-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+            --countdown-closed-bg: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+            --payment-schedule-bg: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+        }
+
+        [data-theme="light"] {
+            /* Light mode colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --border-light: #d1d5db;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --vignette-gradient: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(255,255,255,0.3) 100%);
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --input-disabled: rgba(243, 244, 246, 0.5);
+            --btn-closed: #f3f4f6;
+            --terms-bg: rgba(249, 250, 251, 0.9);
+            --countdown-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(255, 255, 255, 0.8) 100%);
+            --countdown-closed-bg: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(255, 255, 255, 0.8) 100%);
+            --payment-schedule-bg: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(255, 255, 255, 0.8) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        .cinematic-font {
+            font-family: 'Cinzel', serif;
+        }
+        
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .theme-toggle i {
+            font-size: 18px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover i {
+            color: #10b981;
+        }
+        
+        /* Cinematic Grain Overlay */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        /* Vignette Effect */
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            background: var(--vignette-gradient);
+        }
+        
+        /* Green Glow Effects */
+        .green-glow {
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.3), 0 0 60px rgba(16, 185, 129, 0.1);
+        }
+        
+        .green-text-glow {
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+        
+        .green-border-glow {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2), inset 0 0 20px rgba(16, 185, 129, 0.05);
+        }
+        
+        .red-glow {
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.3), 0 0 60px rgba(239, 68, 68, 0.1);
+        }
+        
+        .red-border-glow {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2), inset 0 0 20px rgba(239, 68, 68, 0.05);
+        }
+        
+        /* Telegram Blue Glow */
+        .telegram-glow {
+            box-shadow: 0 0 30px rgba(0, 172, 237, 0.3), 0 0 60px rgba(0, 172, 237, 0.1);
+        }
+        
+        .telegram-border-glow {
+            box-shadow: 0 0 20px rgba(0, 172, 237, 0.2), inset 0 0 20px rgba(0, 172, 237, 0.05);
+        }
+        
+        /* Purple Glow for Payment */
+        .purple-glow {
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.3), 0 0 60px rgba(147, 51, 234, 0.1);
+        }
+        
+        .purple-border-glow {
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.2), inset 0 0 20px rgba(147, 51, 234, 0.05);
+        }
+        
+        /* Cinematic Reveal Animation */
+        @keyframes cinematicReveal {
+            0% {
+                opacity: 0;
+                transform: scale(1.1) translateY(30px);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+        
+        .reveal {
+            animation: cinematicReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        
+        .reveal-delay-1 { animation-delay: 0.2s; opacity: 0; }
+        .reveal-delay-2 { animation-delay: 0.4s; opacity: 0; }
+        .reveal-delay-3 { animation-delay: 0.6s; opacity: 0; }
+        .reveal-delay-4 { animation-delay: 0.8s; opacity: 0; }
+        .reveal-delay-5 { animation-delay: 1.0s; opacity: 0; }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Pulse Glow Animation */
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6), 0 0 60px rgba(16, 185, 129, 0.2); }
+        }
+        
+        @keyframes pulseRed {
+            0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.6), 0 0 60px rgba(239, 68, 68, 0.2); }
+        }
+        
+        @keyframes pulseTelegram {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 172, 237, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 172, 237, 0.6), 0 0 60px rgba(0, 172, 237, 0.2); }
+        }
+        
+        @keyframes pulsePurple {
+            0%, 100% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(147, 51, 234, 0.6), 0 0 60px rgba(147, 51, 234, 0.2); }
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        
+        .pulse-red {
+            animation: pulseRed 3s ease-in-out infinite;
+        }
+        
+        .pulse-telegram {
+            animation: pulseTelegram 3s ease-in-out infinite;
+        }
+        
+        .pulse-purple {
+            animation: pulsePurple 3s ease-in-out infinite;
+        }
+        
+        /* Scanline Effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.1) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 998;
+            opacity: 0.1;
+        }
+        
+        /* Input Styling */
+        .input-field {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+        
+        .input-disabled {
+            background: var(--input-disabled);
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+        
+        /* Button Styling */
+        .btn-cinematic {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #000000;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-cinematic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-cinematic:hover::before {
+            left: 100%;
+        }
+        
+        .btn-cinematic:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+        }
+        
+        .btn-cinematic:disabled {
+            background: var(--btn-closed);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+        
+        .btn-closed {
+            background: var(--btn-closed);
+            color: var(--text-muted);
+            border: 1px solid var(--border-light);
+            cursor: not-allowed;
+        }
+        
+        /* Telegram Button */
+        .btn-telegram {
+            background: linear-gradient(135deg, #00aced 0%, #0088cc 100%);
+            color: var(--text-primary);
+            font-weight: 600;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-telegram::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-telegram:hover::before {
+            left: 100%;
+        }
+        
+        .btn-telegram:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 172, 237, 0.4);
+        }
+        
+        /* Modal Styling */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+        }
+        
+        .glass-panel {
+            background: var(--glass-bg);
+            border: 1px solid #10b981;
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.1);
+        }
+        
+        .glass-panel-red {
+            background: var(--glass-bg);
+            border: 1px solid #ef4444;
+            box-shadow: 0 0 40px rgba(239, 68, 68, 0.1);
+        }
+        
+        .glass-panel-telegram {
+            background: var(--glass-bg);
+            border: 1px solid #00aced;
+            box-shadow: 0 0 40px rgba(0, 172, 237, 0.1);
+        }
+        
+        .glass-panel-purple {
+            background: var(--glass-bg);
+            border: 1px solid #9333ea;
+            box-shadow: 0 0 40px rgba(147, 51, 234, 0.1);
+        }
+        
+        /* Terms Scroll */
+        .terms-content {
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--terms-bg);
+            border: 1px solid var(--border-color);
+        }
+        
+        .terms-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .terms-content::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        
+        .terms-content::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 3px;
+        }
+        
+        /* Checkbox */
+        .custom-checkbox {
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-primary);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .custom-checkbox:checked {
+            background: #10b981;
+            border-color: #10b981;
+        }
+        
+        .custom-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            color: #000;
+            font-size: 14px;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #111;
+            border-top-color: #10b981;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Success Animation */
+        .success-ring {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #10b981;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        /* GIF Container Styling */
+        .gif-container {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #10b981;
+        }
+        
+        .gif-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.8) 100%);
+            pointer-events: none;
+        }
+        
+        /* Image Hover Effects */
+        .image-hover {
+            transition: all 0.5s ease;
+            filter: grayscale(100%) brightness(0.6) contrast(1.2);
+        }
+        
+        .image-hover:hover {
+            filter: grayscale(0%) brightness(1) contrast(1);
+            transform: scale(1.05);
+        }
+        
+        /* Video/GIF Overlay Play Button */
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .gif-container:hover .play-overlay {
+            opacity: 1;
+        }
+        
+        /* Animated Background Lines */
+        .bg-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.15;
+        }
+        
+        .bg-line {
+            position: absolute;
+            background: linear-gradient(to bottom, transparent, #10b981, transparent);
+            width: 1px;
+            animation: lineMove 8s linear infinite;
+        }
+        
+        @keyframes lineMove {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+        
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            animation: glitch-1 2s infinite;
+            color: #10b981;
+            z-index: -1;
+        }
+        
+        .glitch::after {
+            animation: glitch-2 2s infinite;
+            color: #ef4444;
+            z-index: -2;
+        }
+        
+        @keyframes glitch-1 {
+            0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            20% { clip-path: inset(20% 0 30% 0); transform: translate(-2px, 2px); }
+            40% { clip-path: inset(50% 0 20% 0); transform: translate(2px, -2px); }
+        }
+        
+        @keyframes glitch-2 {
+            0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, 2px); }
+            40% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, -2px); }
+        }
+        
+        /* Ken Burns Effect for Images */
+        @keyframes kenBurns {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(-2%, -2%); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+        
+        .ken-burns {
+            animation: kenBurns 20s ease-in-out infinite;
+        }
+        
+        /* Flashing Data Points */
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .flash-data {
+            animation: flash 2s ease-in-out infinite;
+        }
+        
+        /* Ticker Animation */
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .ticker-wrap {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+        
+        /* Countdown Timer */
+        .countdown-box {
+            background: var(--countdown-bg);
+            border: 1px solid #10b981;
+        }
+        
+        .countdown-closed {
+            background: var(--countdown-closed-bg);
+            border: 1px solid #ef4444;
+        }
+        
+        .countdown-number {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Telegram Float Button */
+        .telegram-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00aced 0%, #0088cc 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 172, 237, 0.4);
+        }
+        
+        .telegram-float:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 6px 30px rgba(0, 172, 237, 0.6);
+        }
+        
+        .telegram-float i {
+            font-size: 28px;
+            color: var(--text-primary);
+        }
+        
+        .telegram-tooltip {
+            position: absolute;
+            right: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 172, 237, 0.9);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .telegram-float:hover .telegram-tooltip {
+            opacity: 1;
+            visibility: visible;
+            right: 75px;
+        }
+        
+        /* Notification Badge */
+        .telegram-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: var(--text-primary);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* Payment Schedule Box */
+        .payment-schedule {
+            background: var(--payment-schedule-bg);
+            border: 1px solid #9333ea;
+        }
+        
+        /* Calendar Icon Animation */
+        @keyframes calendarPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .calendar-icon {
+            animation: calendarPulse 2s ease-in-out infinite;
+        }
+
+        /* Transaction Reference Display */
+        .tx-ref {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+
+        /* Semantic Text Color Utilities */
+        .text-primary {
+            color: var(--text-primary);
+        }
+
+        .text-secondary {
+            color: var(--text-secondary);
+        }
+
+        .text-muted {
+            color: var(--text-muted);
+        }
+
+        .border-primary {
+            border-color: var(--border-color);
+        }
+
+        .bg-primary {
+            background-color: var(--glass-bg);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Cinematic Effects -->
+    <div class="grain-overlay"></div>
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+    <div class="bg-lines" id="bgLines"></div>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <!-- Telegram Float Button -->
+    <a href="https://t.me/+7axt7XwhZO05YTBk" target="_blank" class="telegram-float pulse-telegram reveal-delay-5">
+        <i class="fab fa-telegram-plane"></i>
+        <span class="telegram-badge">1</span>
+        <span class="telegram-tooltip">Join for Daily Price Updates</span>
+    </a>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-2xl p-8 reveal max-h-[90vh] overflow-y-auto">
+            <div class="mb-6 text-center">
+                <div class="w-20 h-20 mx-auto mb-4 border-2 border-emerald-500 rounded-full flex items-center justify-center pulse-glow">
+                    <i class="fas fa-file-contract text-emerald-500 text-3xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold cinematic-font green-text-glow">Partnership Agreement</h2>
+                <div class="w-32 h-px bg-emerald-500 mx-auto mt-4"></div>
+            </div>
+            
+            <!-- GIF Header in Modal -->
+            <div class="gif-container w-full h-32 mb-6 rounded overflow-hidden">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtMnBhd2hzbGV5M2E0bWZ1dHR1dHR1dHR1dHR1dHR1dHR1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L8K62iTDkzGX6/giphy.gif" 
+                     alt="Stock Chart" 
+                     class="w-full h-full object-cover opacity-60"
+                     onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=200&fit=crop'">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+            </div>
+            
+            <div class="terms-content text-sm mb-6 p-4 space-y-4">
+                <p class="text-emerald-400 font-semibold">Welcome to the Future of Wealth Creation</p>
+                
+                <p>By entering this platform, you step into a realm where financial opportunities meet strategic growth. Starlign serves as your gateway to curated market investments designed for those who seek more than conventional returns.</p>
+                
+                <p class="text-primary font-semibold">Investment & Payment Schedule:</p>
+                <p>Please note the following critical dates:</p>
+                <ul class="list-disc list-inside space-y-1 text-secondary ml-2">
+                    <li><span class="text-emerald-400">Investment Window:</span> 1st to 3rd of every month</li>
+                    <li><span class="text-purple-400">Payment Day:</span> 30th of every month</li>
+                </ul>
+                <p class="text-xs text-muted mt-2">All returns are calculated and disbursed on the 30th of each month. Ensure your bank details are accurate for seamless transfers.</p>
+                
+                <p class="text-primary">Payment Processing:</p>
+                <p>Payments are securely processed via Paystack. Your transaction reference will be generated upon successful payment. Please save this reference for your records. All customer data including bank details and address are securely transmitted to Paystack for payment processing and compliance purposes.</p>
+                
+                <p class="text-primary">Daily Price Updates:</p>
+                <p>Stay informed with our Telegram channel. Click the floating Telegram button to join and receive daily market price updates, investment insights, and platform announcements directly to your device.</p>
+                
+                <p class="text-primary">Understanding the Nature of Growth:</p>
+                <p>Financial markets are living ecosystems, dynamic, unpredictable, and full of potential. While our strategies are crafted with precision and backed by analytical rigor, we operate in a world where certainty is a luxury. Your capital, like all investments in fluid markets, navigates through waves of opportunity and challenge.</p>
+                
+                <p class="text-primary">Your Commitment:</p>
+                <p>You acknowledge that participation involves exposure to market volatility. You enter willingly, with eyes open to the reality that growth requires risk tolerance. We advise commitment of only those resources you can dedicate to long-term wealth strategies.</p>
+                
+                <p class="text-emerald-500 italic text-xs">Together, we venture into the markets. The path is exciting, the outcomes are yours to claim.</p>
+            </div>
+            
+            <div class="flex items-start gap-3 mb-6">
+                <input type="checkbox" id="termsCheck" class="custom-checkbox mt-1">
+                <label for="termsCheck" class="text-sm text-secondary cursor-pointer select-none">
+                    I acknowledge the risks, restricted investment window (1st-3rd), payment schedule (30th), and Paystack payment processing, and choose to proceed with my investment journey.
+                </label>
+            </div>
+            
+            <!-- Telegram CTA in Modal -->
+            <div class="mb-6 p-4 border border-primary/30 bg-primary/5 rounded-lg flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                    <i class="fab fa-telegram-plane text-primary text-2xl"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm text-primary font-semibold">Join Our Telegram Channel</p>
+                    <p class="text-xs text-secondary mb-2">Get daily price updates and market insights</p>
+                </div>
+                <a href="https://t.me/+7axt7XwhZO05YTBk" target="_blank" class="px-4 py-2 bg-primary hover:bg-primary-dark text-primary text-xs font-semibold rounded transition-colors">
+                    Join Now
+                </a>
+            </div>
+            
+            <button id="acceptTerms" disabled class="w-full py-4 btn-cinematic disabled text-sm mb-4">
+                Enter the Platform
+            </button>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal (Real) -->
+    <div id="realSuccessModal" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md p-8 text-center reveal">
+            <div class="success-ring mx-auto mb-6 pulse-glow">
+                <i class="fas fa-check text-emerald-500 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold cinematic-font mb-2 green-text-glow">Payment Successful</h3>
+            <p class="text-emerald-400 text-lg font-semibold mb-1">₦20,000</p>
+            <p class="text-gray-500 text-sm mb-4">Investment confirmed via Paystack</p>
+            
+            <div class="p-4 rounded-lg mb-4 border border-emerald-500/30" style="background: rgba(0, 0, 0, 0.5);">
+                <p class="text-xs text-gray-500 uppercase mb-1">Transaction Reference</p>
+                <p class="text-sm text-primary font-mono tx-ref" id="txReference">STG-XXXXXXXX</p>
+            </div>
+            
+            <!-- Payment Schedule Notice -->
+            <div class="mb-4 p-3 border border-purple-500/30 bg-purple-500/5 rounded-lg">
+                <div class="flex items-center justify-center gap-2 mb-1">
+                    <i class="fas fa-calendar-check text-purple-400"></i>
+                    <span class="text-sm text-primary font-semibold">Next Payment: 30th</span>
+                </div>
+                <p class="text-xs text-gray-400">Your returns will be credited on the 30th of this month</p>
+            </div>
+            
+            <!-- Telegram CTA in Success Modal -->
+            <div class="mb-6 p-4 border border-blue-500/30 bg-blue-500/5 rounded-lg">
+                <div class="flex items-center justify-center gap-3 mb-2">
+                    <i class="fab fa-telegram-plane text-blue-400 text-2xl"></i>
+                    <span class="text-sm text-primary font-semibold">Stay Updated</span>
+                </div>
+                <p class="text-xs text-gray-400 mb-3">Join our Telegram for daily price updates</p>
+                <a href="https://t.me/+7axt7XwhZO05YTBk" target="_blank" class="inline-block px-6 py-2 bg-blue-500 hover:bg-blue-600 text-primary text-xs font-semibold rounded transition-colors">
+                    Join Telegram Channel
+                </a>
+            </div>
+            
+            <button onclick="closeRealSuccessModal()" class="w-full py-3 border border-emerald-500 text-emerald-500 hover:bg-emerald-500 hover:text-black transition-all text-sm uppercase tracking-widest">
+                Continue
+            </button>
+        </div>
+    </div>
+
+    <!-- Payment Error Modal -->
+    <div id="errorModal" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+        <div class="glass-panel-red w-full max-w-md p-8 text-center reveal">
+            <div class="w-16 h-16 mx-auto mb-4 border-2 border-red-500 rounded-full flex items-center justify-center pulse-red">
+                <i class="fas fa-times text-red-500 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-red-500 mb-2">Payment Failed</h3>
+            <p class="text-gray-400 text-sm mb-4" id="errorMessage">Unable to complete transaction. Please try again.</p>
+            <button onclick="closeErrorModal()" class="w-full py-3 border border-red-500 text-red-500 hover:bg-red-500 hover:text-black transition-all text-sm uppercase tracking-widest">
+                Try Again
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="min-h-screen relative flex flex-col lg:flex-row">
+        
+        <!-- Left Side - Visuals & GIFs -->
+        <div class="lg:w-1/2 relative min-h-[50vh] lg:min-h-screen overflow-hidden" style="background: var(--bg-primary);">
+            
+            <!-- Main Background GIF - Stock Market Trading -->
+            <div class="absolute inset-0">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGtxdHRiM2p0b2l6dGV3eWZ1dHR1dHR1dHR1dHR1dHR1dHR1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPEqDGUULpEU0aQ/giphy.gif" 
+                     alt="Stock Market Trading" 
+                     class="w-full h-full object-cover opacity-30 ken-burns"
+                     onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=800&fit=crop'">
+                <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60"></div>
+            </div>
+
+            <!-- Secondary GIF - Candlestick Charts -->
+            <div class="absolute top-20 right-10 w-48 h-32 gif-container rounded-lg float-animation hidden md:block reveal-delay-1">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtMnBhd2hzbGV5M2E0bWZ1dHR1dHR1dHR1dHR1dHR1dHR1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L8K62iTDkzGX6/giphy.gif" 
+                     alt="Candlestick Charts" 
+                     class="w-full h-full object-cover image-hover"
+                     onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop'">
+                <div class="play-overlay">
+                    <i class="fas fa-play-circle text-emerald-500 text-4xl"></i>
+                </div>
+            </div>
+
+            <!-- Third GIF - Financial Data Stream -->
+            <div class="absolute bottom-40 left-10 w-40 h-28 gif-container rounded-lg float-animation hidden md:block" style="animation-delay: 2s">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHJmZ2Z1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tn33aiTi1jkl6H6/giphy.gif" 
+                     alt="Financial Data" 
+                     class="w-full h-full object-cover image-hover"
+                     onerror="this.src='https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=400&h=300&fit=crop'">
+            </div>
+
+            <!-- Fourth GIF - Trading Interface -->
+            <div class="absolute top-1/2 left-1/3 w-36 h-24 gif-container rounded-lg float-animation hidden lg:block" style="animation-delay: 3s">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHJmZ2Z1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE1YN7d5e3f9g0g/giphy.gif" 
+                     alt="Trading Terminal" 
+                     class="w-full h-full object-cover image-hover"
+                     onerror="this.src='https://images.unsplash.com/photo-1642790106117-e13e1edbd6ac?w=400&h=300&fit=crop'">
+            </div>
+
+            <!-- Floating Elements -->
+            <div class="absolute top-32 left-20 float-animation reveal">
+                <div class="w-24 h-24 border border-emerald-500/30 rounded-full flex items-center justify-center pulse-glow">
+                    <div class="w-16 h-16 border border-emerald-500/50 rounded-full flex items-center justify-center">
+                        <i class="fas fa-chart-line text-emerald-500 text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-60 right-32 float-animation" style="animation-delay: 2s">
+                <div class="w-32 h-32 border border-emerald-500/20 rotate-45 flex items-center justify-center green-glow">
+                    <div class="w-24 h-24 border border-emerald-500/40 rotate-12 flex items-center justify-center">
+                        <i class="fas fa-coins text-emerald-500 text-3xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Ticker - Financial Markets -->
+            <div class="absolute top-0 left-0 right-0" style="background: rgba(0, 0, 0, 0.5); border-bottom: 1px solid rgba(16, 185, 129, 0.2);" class="py-2 ticker-wrap reveal">
+                <div class="ticker-content text-xs font-mono text-emerald-500">
+                    <span class="mx-4">EUR/USD <span class="text-primary">1.0845 ▲</span></span>
+                    <span class="mx-4">GBP/USD <span class="text-primary">1.2678 ▲</span></span>
+                    <span class="mx-4">USD/JPY <span class="text-primary">149.32 ▼</span></span>
+                    <span class="mx-4">USD/NGN <span class="text-primary">1,520.50 ▲</span></span>
+                    <span class="mx-4">GOLD <span class="text-primary">2,045.80 ▲</span></span>
+                    <span class="mx-4">SILVER <span class="text-primary">23.45 ▲</span></span>
+                    <span class="mx-4">OIL <span class="text-primary">78.45 ▼</span></span>
+                    <span class="mx-4">S&P 500 <span class="text-primary">4,783.45 ▲</span></span>
+                    <span class="mx-4">NASDAQ <span class="text-primary">15,120.30 ▲</span></span>
+                    <span class="mx-4">DOW JONES <span class="text-primary">37,545.20 ▲</span></span>
+                    <span class="mx-4">EUR/USD <span class="text-white">1.0845 ▲</span></span>
+                    <span class="mx-4">GBP/USD <span class="text-white">1.2678 ▲</span></span>
+                </div>
+            </div>
+            
+            <!-- Monthly Return & Payment Day -->
+            <div class="absolute bottom-20 left-10 reveal reveal-delay-2">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="text-center">
+                            <p class="text-4xl lg:text-5xl font-bold text-emerald-500 cinematic-font flash-data">Starlign</p>
+                            <p class="text-xs text-gray-500 uppercase tracking-widest mt-2">Investment Platform</p>
+                        </div>
+                        <div class="h-16 w-px bg-emerald-500/30"></div>
+                        <div class="text-xs text-gray-600 max-w-[150px]">
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Day Badge -->
+                    <div class="flex items-center gap-3 p-3 border border-purple-500/30 bg-purple-500/10 rounded-lg">
+                        <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center calendar-icon">
+                            <i class="fas fa-calendar-day text-purple-400 text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-primary font-semibold">Payment Day: <span class="text-purple-400">30th</span></p>
+                            <p class="text-xs text-gray-500">Of every month</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- Static Financial Images -->
+            <div class="absolute bottom-40 right-10 hidden xl:block space-y-4">
+                <div class="w-32 h-20 gif-container rounded overflow-hidden reveal-delay-3">
+                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=300&h=200&fit=crop" 
+                         alt="Stock Trading" 
+                         class="w-full h-full object-cover image-hover opacity-70">
+                </div>
+                <div class="w-32 h-20 gif-container rounded overflow-hidden reveal-delay-4">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=200&fit=crop" 
+                         alt="Financial Analytics" 
+                         class="w-full h-full object-cover image-hover opacity-70">
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Form -->
+        <div class="lg:w-1/2 min-h-screen flex items-center justify-center p-6 lg:p-12 relative" style="background: var(--bg-primary);">
+            <div class="w-full max-w-md reveal reveal-delay-2">
+                
+                <!-- Header -->
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 mx-auto mb-6 relative reveal">
+                        <div class="absolute inset-0 border-2 border-emerald-500 rotate-45 green-glow"></div>
+                        <div class="absolute inset-2 border border-emerald-500/50 rotate-12"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <img src="./starlign.png" alt="Starlign Logo" class="w-20 h-20 object-contain">
+                        </div>
+                    </div>
+                                    </div>
+
+                <!-- Payment Schedule Card -->
+                <div class="mb-6 p-4 payment-schedule rounded-lg reveal reveal-delay-3">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center calendar-icon">
+                                <i class="fas fa-calendar-alt text-purple-400"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-primary font-semibold">Investment Schedule</p>
+                                <p class="text-xs text-gray-400">Mark your calendar</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 text-center">
+                        <div style="background: var(--bg-secondary);" class="p-3 rounded border border-emerald-500/30">
+                            <p class="text-xs text-gray-500 uppercase mb-1">Invest</p>
+                            <p class="text-lg font-bold text-emerald-500">1st - 3rd</p>
+                            <p class="text-[10px] text-gray-600">Every month</p>
+                        </div>
+                        <div style="background: var(--bg-secondary);" class="p-3 rounded border border-purple-500/30">
+                            <p class="text-xs text-gray-500 uppercase mb-1">Get Paid</p>
+                            <p class="text-lg font-bold text-purple-400">30th</p>
+                            <p class="text-[10px] text-gray-600">Every month</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telegram Notice Card -->
+                <div class="mb-6 p-4 border border-blue-500/30 bg-blue-500/5 rounded-lg flex items-center gap-4 reveal reveal-delay-3">
+                    <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center pulse-telegram">
+                        <i class="fab fa-telegram-plane text-blue-400 text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-primary font-semibold">Daily Price Updates</p>
+                        <p class="text-xs text-gray-400 mb-2">Join our Telegram channel for real-time market data</p>
+                    </div>
+                    <a href="https://t.me/+7axt7XwhZO05YTBk" target="_blank" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-primary text-xs font-semibold rounded transition-colors flex items-center gap-2">
+                        <span>Join</span>
+                        <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Investment Window Notice -->
+                <div id="windowNotice" class="mb-6 p-4 border text-center reveal reveal-delay-3">
+                    <div class="flex items-center justify-center gap-2 mb-2">
+                        <i class="fas fa-calendar-alt" id="windowIcon"></i>
+                        <span class="text-xs uppercase tracking-widest font-semibold" id="windowStatus">Checking Window...</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-3">Investments accepted only from 1st to 3rd of each month</p>
+                    
+                    <!-- Countdown Timer -->
+                    <div id="countdownDisplay" class="hidden">
+                        <div class="grid grid-cols-4 gap-2 text-center">
+                            <div style="background: rgba(0, 0, 0, 0.5);" class="p-2 rounded">
+                                <div class="text-lg font-bold text-emerald-500 countdown-number" id="days">00</div>
+                                <div class="text-[10px] text-gray-500 uppercase">Days</div>
+                            </div>
+                            <div style="background: rgba(0, 0, 0, 0.5);" class="p-2 rounded">
+                                <div class="text-lg font-bold text-emerald-500 countdown-number" id="hours">00</div>
+                                <div class="text-[10px] text-gray-500 uppercase">Hours</div>
+                            </div>
+                            <div style="background: rgba(0, 0, 0, 0.5);" class="p-2 rounded">
+                                <div class="text-lg font-bold text-emerald-500 countdown-number" id="minutes">00</div>
+                                <div class="text-[10px] text-gray-500 uppercase">Mins</div>
+                            </div>
+                            <div style="background: rgba(0, 0, 0, 0.5);" class="p-2 rounded">
+                                <div class="text-lg font-bold text-emerald-500 countdown-number" id="seconds">00</div>
+                                <div class="text-[10px] text-gray-500 uppercase">Secs</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2" id="countdownText">Until next window opens</p>
+                    </div>
+                </div>
+
+                <!-- Investment Card with Mini GIF -->
+                <div class="border border-emerald-500/30 p-6 mb-6 green-border-glow reveal reveal-delay-3 relative overflow-hidden" style="background: rgba(0, 0, 0, 0.8);" id="investmentCard">
+                    <!-- Background mini gif -->
+                    <div class="absolute top-0 right-0 w-32 h-full opacity-20">
+                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHJmZ2Z1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dHR1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26tn33aiTi1jkl6H6/giphy.gif" 
+                             class="w-full h-full object-cover"
+                             onerror="this.style.display='none'">
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="text-gray-500 text-xs uppercase tracking-widest">Investment Entry</span>
+                            <span class="text-emerald-500 text-xs animate-pulse" id="liveIndicator">LIVE</span>
+                        </div>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-4xl font-bold cinematic-font text-emerald-500">₦20,000</span>
+                            <span class="text-gray-600 text-sm">NGN</span>
+                        </div>
+                        <div class="w-full h-px bg-gradient-to-r from-emerald-500/50 to-transparent mt-4 mb-2"></div>
+                        <div class="flex justify-between items-center">
+                            <p class="text-gray-600 text-xs">Standard entry for all partners</p>
+                            <span class="text-emerald-500 text-xs font-semibold">Investment Platform</span>
+                        </div>
+                        <div class="mt-3 pt-3 border-t border-gray-800 flex items-center justify-between">
+                            <span class="text-xs text-gray-500"><i class="fas fa-calendar-day mr-1"></i> Paid 30th</span>
+                            <span class="text-xs text-purple-400">Monthly</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Closed Window Message -->
+                <div id="closedMessage" class="hidden mb-6 p-6 border border-red-500/30 bg-red-500/5 text-center reveal reveal-delay-3">
+                    <div class="w-16 h-16 mx-auto mb-4 border-2 border-red-500 rounded-full flex items-center justify-center pulse-red">
+                        <i class="fas fa-lock text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-red-500 font-bold mb-2">Investment Window Closed</h3>
+                    <p class="text-gray-400 text-sm mb-4">Paystack payments are temporarily disabled outside the investment window.</p>
+                    <div class="text-xs text-gray-500 mb-3">
+                        <p>Next window: <span class="text-red-400 font-semibold" id="nextWindowDate">1st of next month</span></p>
+                    </div>
+                    <div class="p-3 border border-purple-500/30 bg-purple-500/5 rounded">
+                        <p class="text-xs text-gray-400"><i class="fas fa-info-circle mr-1 text-purple-400"></i> Remember: Payment day is <span class="text-purple-400 font-semibold">30th</span> of every month</p>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form id="investmentForm" class="space-y-5 reveal reveal-delay-4">
+                    <div class="group">
+                        <label class="text-xs text-gray-500 uppercase tracking-wider mb-2 block group-focus-within:text-emerald-500 transition-colors">Full Name</label>
+                        <input type="text" name="fullName" id="inputName" required 
+                               class="input-field w-full px-4 py-4 text-sm bg-transparent" 
+                               placeholder="Enter your full name">
+                    </div>
+
+                    <div class="group">
+                        <label class="text-xs text-gray-500 uppercase tracking-wider mb-2 block group-focus-within:text-emerald-500 transition-colors">Email Address</label>
+                        <input type="email" name="email" id="inputEmail" required 
+                               class="input-field w-full px-4 py-4 text-sm bg-transparent" 
+                               placeholder="your@email.com">
+                    </div>
+
+                    <div class="group">
+                        <label class="text-xs text-gray-500 uppercase tracking-wider mb-2 block group-focus-within:text-emerald-500 transition-colors">Home Address</label>
+                        <input type="text" name="address" id="inputAddress" required 
+                               class="input-field w-full px-4 py-4 text-sm bg-transparent" 
+                               placeholder="Complete residential address">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="group">
+                            <label class="text-xs text-gray-500 uppercase tracking-wider mb-2 block group-focus-within:text-emerald-500 transition-colors">Bank Name</label>
+                            <input type="text" name="bankName" id="inputBank" required 
+                                   class="input-field w-full px-4 py-4 text-sm bg-transparent" 
+                                   placeholder="Bank">
+                        </div>
+                        <div class="group">
+                            <label class="text-xs text-gray-500 uppercase tracking-wider mb-2 block group-focus-within:text-emerald-500 transition-colors">Account Number</label>
+                            <input type="text" name="accountNumber" id="inputAccount" required 
+                                   class="input-field w-full px-4 py-4 text-sm bg-transparent" 
+                                   placeholder="Account No">
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <label class="text-xs text-gray-500 uppercase tracking-wider mb-2 block group-focus-within:text-emerald-500 transition-colors">Account Name</label>
+                        <input type="text" name="accountName" id="inputAccountName" required 
+                               class="input-field w-full px-4 py-4 text-sm bg-transparent" 
+                               placeholder="Name as it appears on account">
+                    </div>
+
+                    <!-- Payment Day Reminder -->
+                    <div class="p-3 border border-purple-500/20 bg-purple-500/5 rounded flex items-center gap-3">
+                        <i class="fas fa-calendar-check text-purple-400"></i>
+                        <p class="text-xs text-gray-400">Returns paid on <span class="text-purple-400 font-semibold">30th</span> of every month to the bank account provided above</p>
+                    </div>
+
+                    <div class="pt-6">
+                        <button type="submit" id="submitBtn"
+                                class="w-full py-4 btn-cinematic text-sm flex items-center justify-center gap-3 group">
+                            <span id="btnText">Pay with Paystack</span>
+                            <i class="fas fa-credit-card group-hover:translate-x-1 transition-transform" id="btnIcon"></i>
+                        </button>
+                        <div class="flex items-center justify-center gap-2 mt-4 text-gray-600 text-xs">
+                            <i class="fas fa-lock text-emerald-500"></i>
+                            <span id="securityText">Secured by Paystack SSL encryption</span>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Footer -->
+                <div class="mt-12 pt-6 border-t border-gray-900 text-center reveal reveal-delay-4">
+                    <div class="flex justify-center gap-4 mb-4">
+                        <div class="w-8 h-8 rounded-full border border-gray-800 flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-gray-600 text-xs"></i>
+                        </div>
+                        <div class="w-8 h-8 rounded-full border border-gray-800 flex items-center justify-center">
+                            <i class="fas fa-chart-bar text-gray-600 text-xs"></i>
+                        </div>
+                        <div class="w-8 h-8 rounded-full border border-gray-800 flex items-center justify-center">
+                            <i class="fas fa-university text-gray-600 text-xs"></i>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-700 mb-2">© 2024 Starlign Capital. All rights reserved.</p>
+                    <div class="flex justify-center gap-4 text-xs">
+                        <a href="https://t.me/+7axt7XwhZO05YTBk" target="_blank" class="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors">
+                            <i class="fab fa-telegram-plane"></i>
+                            <span>Telegram</span>
+                        </a>
+                        <span class="text-gray-700">|</span>
+                        <span class="text-gray-600">Invest: 1st-3rd | Pay: 30th</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create animated background lines
+        const bgLines = document.getElementById('bgLines');
+        for (let i = 0; i < 8; i++) {
+            const line = document.createElement('div');
+            line.className = 'bg-line';
+            line.style.left = `${10 + i * 12}%`;
+            line.style.height = `${80 + Math.random() * 100}px`;
+            line.style.animationDelay = `${i * 0.8}s`;
+            line.style.animationDuration = `${5 + Math.random() * 4}s`;
+            bgLines.appendChild(line);
+        }
+
+        // Date checking logic
+        function checkInvestmentWindow() {
+            const now = new Date();
+            // Convert to UTC+1
+            const utcPlus1 = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (60 * 60000));
+            const currentDay = utcPlus1.getDate();
+            const currentMonth = utcPlus1.getMonth();
+            const currentYear = utcPlus1.getFullYear();
+            
+            const isWindowOpen = currentDay >= 1 && currentDay <= 3;
+            
+            const windowNotice = document.getElementById('windowNotice');
+            const countdownDisplay = document.getElementById('countdownDisplay');
+            const windowStatus = document.getElementById('windowStatus');
+            const windowIcon = document.getElementById('windowIcon');
+            const closedMessage = document.getElementById('closedMessage');
+            const investmentCard = document.getElementById('investmentCard');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const liveIndicator = document.getElementById('liveIndicator');
+            const securityText = document.getElementById('securityText');
+            const nextWindowDate = document.getElementById('nextWindowDate');
+            
+            // Disable/enable inputs
+            const inputs = document.querySelectorAll('#investmentForm input');
+            
+            if (isWindowOpen) {
+                // Window is OPEN
+                windowNotice.className = 'mb-6 p-4 border border-emerald-500/30 bg-emerald-500/5 text-center reveal reveal-delay-3 countdown-box';
+                windowStatus.textContent = 'Investment Window Open';
+                windowStatus.className = 'text-xs uppercase tracking-widest font-semibold text-emerald-500';
+                windowIcon.className = 'fas fa-door-open text-emerald-500';
+                countdownDisplay.classList.add('hidden');
+                closedMessage.classList.add('hidden');
+                investmentCard.classList.remove('hidden');
+                
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('btn-closed');
+                submitBtn.classList.add('btn-cinematic');
+                btnText.textContent = 'Pay with Paystack';
+                btnIcon.className = 'fas fa-credit-card group-hover:translate-x-1 transition-transform';
+                liveIndicator.textContent = 'LIVE';
+                liveIndicator.className = 'text-emerald-500 text-xs animate-pulse';
+                securityText.textContent = 'Secured by Paystack SSL encryption';
+                
+                inputs.forEach(input => {
+                    input.disabled = false;
+                    input.classList.remove('input-disabled');
+                });
+                
+            } else {
+                // Window is CLOSED
+                windowNotice.className = 'mb-6 p-4 border border-red-500/30 bg-red-500/5 text-center reveal reveal-delay-3 countdown-closed';
+                windowStatus.textContent = 'Investment Window Closed';
+                windowStatus.className = 'text-xs uppercase tracking-widest font-semibold text-red-500';
+                windowIcon.className = 'fas fa-lock text-red-500';
+                countdownDisplay.classList.remove('hidden');
+                closedMessage.classList.remove('hidden');
+                investmentCard.classList.add('hidden');
+                
+                submitBtn.disabled = true;
+                submitBtn.classList.remove('btn-cinematic');
+                submitBtn.classList.add('btn-closed');
+                btnText.textContent = 'Window Closed';
+                btnIcon.className = 'fas fa-lock';
+                securityText.textContent = 'Payments disabled until next window';
+                
+                inputs.forEach(input => {
+                    input.disabled = true;
+                    input.classList.add('input-disabled');
+                });
+                
+                // Calculate next window date (UTC+1)
+                let nextWindow;
+                if (currentDay > 3) {
+                    // Next month, 1st at 00:00 UTC+1
+                    nextWindow = new Date(Date.UTC(currentYear, currentMonth + 1, 1, -1)); // UTC+1 = UTC-1
+                } else {
+                    // This shouldn't happen, but just in case
+                    nextWindow = new Date(Date.UTC(currentYear, currentMonth, 1, -1)); // UTC+1 = UTC-1
+                }
+                
+                const options = { month: 'long', day: 'numeric' };
+                nextWindowDate.textContent = nextWindow.toLocaleDateString('en-US', options);
+                
+                startCountdown(nextWindow);
+            }
+        }
+
+        // Countdown timer
+        function startCountdown(targetDate) {
+            function updateCountdown() {
+                const now = new Date();
+                // Convert to UTC+1
+                const utcPlus1 = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (60 * 60000));
+                const diff = targetDate - utcPlus1;
+                
+                if (diff <= 0) {
+                    checkInvestmentWindow();
+                    return;
+                }
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        }
+
+        // Check window on load
+        checkInvestmentWindow();
+
+        // Terms Modal
+        const termsModal = document.getElementById('termsModal');
+        const termsCheck = document.getElementById('termsCheck');
+        const acceptBtn = document.getElementById('acceptTerms');
+
+        if (!localStorage.getItem('starlignTermsAccepted')) {
+            setTimeout(() => {
+                termsModal.classList.remove('hidden');
+            }, 1000);
+        }
+
+        termsCheck.addEventListener('change', (e) => {
+            acceptBtn.disabled = !e.target.checked;
+        });
+
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('starlignTermsAccepted', 'true');
+            termsModal.classList.add('hidden');
+        });
+
+        // REAL PAYSTACK INTEGRATION
+        document.getElementById('investmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Double-check window is still open (UTC+1)
+            const now = new Date();
+            const utcPlus1 = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (60 * 60000));
+            const currentDay = utcPlus1.getDate();
+            if (currentDay < 1 || currentDay > 3) {
+                alert('Investment window has closed. Please return on the 1st-3rd of next month.');
+                checkInvestmentWindow();
+                return;
+            }
+            
+            // Get form values
+            const fullName = document.getElementById('inputName').value;
+            const email = document.getElementById('inputEmail').value;
+            const address = document.getElementById('inputAddress').value;
+            const bankName = document.getElementById('inputBank').value;
+            const accountNumber = document.getElementById('inputAccount').value;
+            const accountName = document.getElementById('inputAccountName').value;
+            
+            // Validate all fields
+            if (!fullName || !email || !address || !bankName || !accountNumber || !accountName) {
+                alert('Please fill in all fields before proceeding to payment.');
+                return;
+            }
+            
+            // Generate unique transaction reference
+            const txRef = 'STG-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+            
+            // Initialize Paystack payment
+            const handler = PaystackPop.setup({
+                key: 'pk_live_1fcb965c9c209f782b648e36092f6818cc337ab2', // Replace with your actual Paystack public key
+                email: email,
+                amount: 2000000, // ₦20,000 in kobo (20,000 * 100)
+                currency: 'NGN',
+                ref: txRef,
+                metadata: {
+                    custom_fields: [
+                        {
+                            display_name: "Full Name",
+                            variable_name: "full_name",
+                            value: fullName
+                        },
+                        {
+                            display_name: "Home Address",
+                            variable_name: "home_address",
+                            value: address
+                        },
+                        {
+                            display_name: "Bank Name",
+                            variable_name: "bank_name",
+                            value: bankName
+                        },
+                        {
+                            display_name: "Account Number",
+                            variable_name: "account_number",
+                            value: accountNumber
+                        },
+                        {
+                            display_name: "Account Name",
+                            variable_name: "account_name",
+                            value: accountName
+                        },
+                        {
+                            display_name: "Investment Type",
+                            variable_name: "investment_type",
+                            value: "Starlign Investment"
+                        },
+                        {
+                            display_name: "Payment Day",
+                            variable_name: "payment_day",
+                            value: "30th of every month"
+                        }
+                    ]
+                },
+                callback: function(response) {
+                    // Payment successful
+                    const reference = response.reference;
+                    
+                    // Show success modal with transaction reference
+                    document.getElementById('txReference').textContent = reference;
+                    document.getElementById('realSuccessModal').classList.remove('hidden');
+                    
+                    // Store transaction in localStorage for record (client-side only)
+                    const transactions = JSON.parse(localStorage.getItem('starlign_transactions') || '[]');
+                    transactions.push({
+                        reference: reference,
+                        amount: 20000,
+                        email: email,
+                        name: fullName,
+                        date: new Date().toISOString(),
+                        status: 'success'
+                    });
+                    localStorage.setItem('starlign_transactions', JSON.stringify(transactions));
+                    
+                    // Reset form
+                    document.getElementById('investmentForm').reset();
+                },
+                onClose: function() {
+                    // User closed the payment window
+                    console.log('Payment window closed by user');
+                }
+            });
+            
+            // Open Paystack payment window
+            handler.openIframe();
+        });
+
+        function closeRealSuccessModal() {
+            document.getElementById('realSuccessModal').classList.add('hidden');
+        }
+
+        function closeErrorModal() {
+            document.getElementById('errorModal').classList.add('hidden');
+        }
+
+        // Close modals on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.add('hidden');
+            }
+        }
+
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 15;
+            const y = (e.clientY / window.innerHeight - 0.5) * 15;
+            
+            const floatingElements = document.querySelectorAll('.float-animation');
+            floatingElements.forEach((el, index) => {
+                const speed = (index + 1) * 0.3;
+                el.style.transform = `translate(${x * speed}px, ${y * speed}px) rotate(${index % 2 === 0 ? '0deg' : '45deg'})`;
+            });
+        });
+
+        // Random flash effect on data points
+        setInterval(() => {
+            const flashElements = document.querySelectorAll('.flash-data');
+            flashElements.forEach(el => {
+                if (Math.random() > 0.7) {
+                    el.style.opacity = '0.5';
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                    }, 200);
+                }
+            });
+        }, 2000);
+
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to dark mode
+        const currentTheme = localStorage.getItem('starlignTheme') || 'dark';
+        html.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('starlignTheme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        }
+    </script>
+</body>
+</html>
