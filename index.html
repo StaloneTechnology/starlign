@@ -1,0 +1,1191 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>STARLIGN | Market Insights</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+
+:root {
+    --bg: #050914;
+    --panel: #0b1527;
+    --blue: #009dff;
+    --cyan: #00d5ff;
+    --line: #1c3552;
+    --text: #f1f7ff;
+    --muted: #9eafc5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            #09244b 0,
+            transparent 35%
+        ),
+        var(--bg);
+
+    color: var(--text);
+    font-family: "Inter", Arial, sans-serif;
+}
+
+main {
+    max-width: 1440px;
+    min-height: 100vh;
+    margin: auto;
+    padding: 24px;
+
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 22px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero,
+.card {
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: 0 12px 50px #0006;
+}
+
+.hero {
+    padding: 34px;
+    min-height: 700px;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(
+            180deg,
+            #040b17aa,
+            #050a16f7
+        ),
+        url("https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1400&q=85")
+        center / cover;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #0678ff,
+            #00d5ff
+        );
+
+    box-shadow:
+        0 0 24px #00bfff55;
+}
+
+.hero-title {
+    margin: auto 0;
+    padding: 50px 0;
+}
+
+.eyebrow {
+    color: var(--cyan);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+}
+
+h1 {
+    margin: 20px 0;
+
+    font-size: clamp(44px, 5vw, 78px);
+    line-height: 1.03;
+    letter-spacing: -3px;
+}
+
+h1 span {
+    display: block;
+
+    color: var(--cyan);
+
+    text-shadow:
+        0 0 35px #00bfff66;
+}
+
+.lead {
+    max-width: 470px;
+
+    color: #bed0e4;
+
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* =========================
+   WHAT WE DO
+========================= */
+
+.about {
+    padding: 25px;
+
+    border: 1px solid #1675b8;
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #0c2c4bdd,
+            #061122ed
+        );
+
+    box-shadow:
+        0 0 32px #009dff22;
+}
+
+.about h2 {
+    margin: 13px 0;
+
+    font-size: 26px;
+}
+
+.about p {
+    margin: 0;
+
+    color: #d1dfed;
+
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+
+    margin-top: 22px;
+}
+
+.step {
+    padding: 15px 11px;
+
+    border: 1px solid #22445f;
+    border-radius: 12px;
+
+    background: #071526e0;
+}
+
+.step b {
+    display: block;
+
+    color: #d9f7ff;
+
+    font-size: 11px;
+}
+
+.step small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.footer {
+    margin-top: 22px;
+
+    color: #8197b2;
+
+    font-size: 11px;
+}
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.right {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.card {
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101d31,
+            #070e1b
+        );
+}
+
+.card h2 {
+    margin: 10px 0 6px;
+
+    font-size: 28px;
+}
+
+.sub {
+    margin-bottom: 25px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.field {
+    margin-bottom: 17px;
+}
+
+.field label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.field input {
+    width: 100%;
+
+    padding: 15px;
+
+    outline: none;
+
+    border: 1px solid #263e59;
+    border-radius: 11px;
+
+    background: #050c18;
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.field input:focus {
+    border-color: var(--cyan);
+
+    box-shadow:
+        0 0 0 3px #00d5ff1a;
+}
+
+/* =========================
+   AMOUNT
+========================= */
+
+.amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 22px 0;
+    padding: 17px;
+
+    border: 1px solid #166496;
+    border-radius: 13px;
+
+    background: #07305650;
+}
+
+.amount small {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.amount strong {
+    display: block;
+
+    margin-top: 6px;
+
+    font-size: 24px;
+}
+
+.amount .icon {
+    color: var(--cyan);
+
+    font-size: 25px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.primary {
+    width: 100%;
+
+    padding: 16px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            100deg,
+            #057dff,
+            #00c9ff
+        );
+
+    color: white;
+
+    font-family: inherit;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 24px #009dff33;
+
+    transition: 0.2s;
+}
+
+.primary:hover {
+    transform: translateY(-1px);
+
+    filter: brightness(1.08);
+}
+
+.primary:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.status {
+    display: none;
+
+    margin-top: 14px;
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #10304a;
+
+    color: #c4edff;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.status.show {
+    display: block;
+}
+
+.status.error {
+    background: #3b1824;
+
+    color: #ffd0d0;
+}
+
+/* =========================
+   NOTES
+========================= */
+
+.note,
+.risk {
+    margin: 15px 0 0;
+
+    color: #91a5bd;
+
+    font-size: 10px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.note a {
+    color: #65d7ff;
+}
+
+.risk {
+    padding-top: 14px;
+
+    border-top: 1px solid #23334a;
+
+    text-align: left;
+}
+
+/* =========================
+   SCHEDULE
+========================= */
+
+.schedule h3 {
+    margin: 0 0 15px;
+
+    font-size: 16px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 16px 0;
+
+    border-top: 1px solid #22324a;
+}
+
+.row b {
+    font-size: 12px;
+}
+
+.row small {
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.badge {
+    padding: 8px 10px;
+
+    border: 1px solid #1473a6;
+    border-radius: 8px;
+
+    background: #00bfff16;
+
+    color: #b5eeff;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 100;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px;
+
+    background: #000c;
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal-box {
+    width: min(500px, 100%);
+
+    padding: 25px;
+
+    border: 1px solid #205178;
+    border-radius: 17px;
+
+    background: #0b1628;
+}
+
+.modal-box p {
+    color: #b5c6da;
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 980px) {
+
+    main {
+        grid-template-columns: 1fr;
+
+        max-width: 760px;
+    }
+
+    .hero {
+        min-height: 0;
+    }
+
+    .hero-title {
+        padding: 55px 0;
+    }
+}
+
+@media (max-width: 550px) {
+
+    main {
+        padding: 12px;
+
+        gap: 13px;
+    }
+
+    .hero,
+    .card {
+        padding: 20px;
+
+        border-radius: 17px;
+    }
+
+    h1 {
+        font-size: 44px;
+
+        letter-spacing: -2px;
+    }
+
+    .about {
+        padding: 18px;
+    }
+
+    .about h2 {
+        font-size: 22px;
+    }
+
+    .steps {
+        gap: 6px;
+    }
+
+    .step {
+        padding: 11px 8px;
+    }
+
+    .brand {
+        font-size: 18px;
+    }
+
+    .lead {
+        font-size: 13px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<main>
+
+<!-- =========================
+     LEFT SIDE
+========================= -->
+
+<section class="hero">
+
+    <div class="brand">
+
+        <span class="logo">
+            ↗
+        </span>
+
+        STARLIGN
+
+    </div>
+
+
+    <div class="hero-title">
+
+        <div class="eyebrow">
+            Research-led investing
+        </div>
+
+        <h1>
+            INVEST WITH
+            <span>INSIGHT.</span>
+        </h1>
+
+        <p class="lead">
+            Market research. Strategic stock selection.
+            A disciplined approach to investing.
+        </p>
+
+    </div>
+
+
+    <section class="about">
+
+        <div class="eyebrow">
+            ✦ WHAT DO WE DO?
+        </div>
+
+        <h2>
+            We study the market. We identify opportunities.
+        </h2>
+
+        <p>
+            Our financial analysts study market trends and company
+            performance to identify stocks with the potential to rise
+            during the week. We select investments based on our research,
+            aiming to benefit from possible price increases.
+        </p>
+
+
+        <div class="steps">
+
+            <div class="step">
+                <b>01 · ANALYSE</b>
+                <small>Study market trends</small>
+            </div>
+
+            <div class="step">
+                <b>02 · SELECT</b>
+                <small>Identify opportunities</small>
+            </div>
+
+            <div class="step">
+                <b>03 · INVEST</b>
+                <small>Target potential growth</small>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+        Research-led approach · Weekly schedule
+    </div>
+
+</section>
+
+
+<!-- =========================
+     RIGHT SIDE
+========================= -->
+
+<div class="right">
+
+
+<section class="card">
+
+    <div class="eyebrow">
+        GET STARTED
+    </div>
+
+    <h2>
+        Join STARLIGN
+    </h2>
+
+    <p class="sub">
+        Enter your details to continue.
+    </p>
+
+
+    <form id="registrationForm">
+
+        <div class="field">
+
+            <label for="fullName">
+                Full name
+            </label>
+
+            <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Your full name"
+                autocomplete="name"
+                maxlength="100"
+                required
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="email">
+                Email address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="phone">
+                Phone number
+            </label>
+
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Your phone number"
+                autocomplete="tel"
+                required
+            >
+
+        </div>
+
+
+        <div class="amount">
+
+            <div>
+
+                <small>
+                    Investment amount
+                </small>
+
+                <strong>
+                    ₦20,000
+                </strong>
+
+            </div>
+
+            <div class="icon">
+                ↗
+            </div>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="primary"
+            id="payButton"
+        >
+            PAY ₦20,000 →
+        </button>
+
+
+        <div
+            class="status"
+            id="formMessage"
+            role="status"
+            aria-live="polite"
+        ></div>
+
+    </form>
+
+
+    <p class="note">
+
+        By continuing, you acknowledge the
+
+        <a href="#" id="openTerms">
+            Terms &amp; Risk Disclosure
+        </a>.
+
+    </p>
+
+
+    <p class="risk">
+
+        <strong>
+            Investment risk:
+        </strong>
+
+        Stocks can fall as well as rise.
+        Profits and payouts are not guaranteed.
+        You may lose some or all of your investment.
+
+    </p>
+
+</section>
+
+
+<!-- =========================
+     SCHEDULE
+========================= -->
+
+<section class="card schedule">
+
+    <h3>
+        ◷ Payment Schedule
+    </h3>
+
+
+    <div class="row">
+
+        <div>
+
+            <b>
+                Payments
+            </b>
+
+            <small>
+                Payment window
+            </small>
+
+        </div>
+
+        <span class="badge">
+            SATURDAY
+        </span>
+
+    </div>
+
+
+    <p class="risk">
+
+        Payments are available on Saturdays.
+        The payment button will remain unavailable
+        outside the Saturday payment window.
+
+    </p>
+
+</section>
+
+
+<div
+    class="footer"
+    style="text-align:center;margin:0"
+>
+    STARLIGN © <span id="year"></span>
+</div>
+
+</div>
+
+</main>
+
+
+<!-- =========================
+     TERMS MODAL
+========================= -->
+
+<div
+    class="modal"
+    id="termsModal"
+>
+
+    <div class="modal-box">
+
+        <h2>
+            Terms &amp; Risk Disclosure
+        </h2>
+
+
+        <p>
+            Market analysis cannot predict stock prices
+            with certainty. Stocks may rise or fall and
+            losses are possible.
+        </p>
+
+
+        <p>
+            Payments are available on Saturdays.
+            Payment does not guarantee a profit or a
+            particular payout.
+        </p>
+
+
+        <p>
+            Please review all applicable investment,
+            withdrawal, fee, and regulatory terms before
+            making a payment.
+        </p>
+
+
+        <button
+            type="button"
+            class="primary"
+            id="closeTerms"
+        >
+            CLOSE
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+==========================================================
+STARLIGN PAYSTACK PAYMENT PAGE CONFIGURATION
+==========================================================
+
+IMPORTANT:
+
+Create your Paystack Payment Page in your Paystack
+dashboard and configure it for ₦20,000.
+
+Then paste the Payment Page URL below.
+
+Example:
+
+https://paystack.com/pay/YOUR-PAGE-NAME
+
+DO NOT put a Paystack secret key in this file.
+==========================================================
+*/
+
+const PAYSTACK_PAYMENT_PAGE =
+    "https://paystack.shop/pay/3aos9ebc-k";
+
+
+/*
+==========================================================
+NIGERIA / LAGOS TIME
+==========================================================
+*/
+
+function isSaturdayInNigeria() {
+
+    const day = new Intl.DateTimeFormat(
+        "en-US",
+        {
+            timeZone: "Africa/Lagos",
+            weekday: "short"
+        }
+    ).format(new Date());
+
+    return day === "Sat";
+}
+
+
+/*
+==========================================================
+ELEMENTS
+==========================================================
+*/
+
+const form =
+    document.getElementById("registrationForm");
+
+const payButton =
+    document.getElementById("payButton");
+
+const message =
+    document.getElementById("formMessage");
+
+const year =
+    document.getElementById("year");
+
+year.textContent =
+    new Date().getFullYear();
+
+
+/*
+==========================================================
+MESSAGE
+==========================================================
+*/
+
+function showMessage(text, error = false) {
+
+    message.textContent = text;
+
+    message.className =
+        "status show" +
+        (error ? " error" : "");
+}
+
+
+/*
+==========================================================
+FORM SUBMISSION
+==========================================================
+*/
+
+form.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        /*
+        Check that the form is complete.
+        */
+
+        if (!form.reportValidity()) {
+            return;
+        }
+
+
+        /*
+        Check Saturday.
+        */
+
+        if (!isSaturdayInNigeria()) {
+
+            showMessage(
+                "Payments are only available on Saturdays.",
+                true
+            );
+
+            return;
+        }
+
+
+        /*
+        Check Payment Page URL.
+        */
+
+        if (
+            !PAYSTACK_PAYMENT_PAGE ||
+            PAYSTACK_PAYMENT_PAGE.includes(
+                "https://paystack.shop/pay/3aos9ebc-k"
+            )
+        ) {
+
+            showMessage(
+                "Paystack payment page has not been configured yet.",
+                true
+            );
+
+            return;
+        }
+
+
+        /*
+        Disable button while redirecting.
+        */
+
+        payButton.disabled = true;
+
+        payButton.textContent =
+            "OPENING PAYSTACK...";
+
+
+        /*
+        Send customer to Paystack.
+        */
+
+        window.location.href =
+            PAYSTACK_PAYMENT_PAGE;
+
+    }
+);
+
+
+/*
+==========================================================
+TERMS MODAL
+==========================================================
+*/
+
+const modal =
+    document.getElementById("termsModal");
+
+document
+    .getElementById("openTerms")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            modal.classList.add("open");
+
+        }
+    );
+
+
+document
+    .getElementById("closeTerms")
+    .addEventListener(
+        "click",
+        function() {
+
+            modal.classList.remove("open");
+
+        }
+    );
+
+
+modal.addEventListener(
+    "click",
+    function(event) {
+
+        if (event.target === modal) {
+
+            modal.classList.remove("open");
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            modal.classList.remove("open");
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
