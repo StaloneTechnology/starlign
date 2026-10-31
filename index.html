@@ -953,229 +953,84 @@ h1 span {
 
 
 <script>
-
-/*
-==========================================================
-STARLIGN PAYSTACK PAYMENT PAGE CONFIGURATION
-==========================================================
-
-IMPORTANT:
-
-Create your Paystack Payment Page in your Paystack
-dashboard and configure it for ₦20,000.
-
-Then paste the Payment Page URL below.
-
-Example:
-
-https://paystack.com/pay/YOUR-PAGE-NAME
-
-DO NOT put a Paystack secret key in this file.
-==========================================================
-*/
-
 const PAYSTACK_PAYMENT_PAGE =
     "https://paystack.shop/pay/3aos9ebc-k";
 
+const form = document.getElementById("registrationForm");
+const payButton = document.getElementById("payButton");
+const message = document.getElementById("formMessage");
+const year = document.getElementById("year");
 
-/*
-==========================================================
-NIGERIA / LAGOS TIME
-==========================================================
-*/
+if (year) {
+    year.textContent = new Date().getFullYear();
+}
+
+function showMessage(text, error = false) {
+    if (!message) return;
+
+    message.textContent = text;
+    message.className = "status show" + (error ? " error" : "");
+}
 
 function isSaturdayInNigeria() {
-
-    const day = new Intl.DateTimeFormat(
-        "en-US",
-        {
-            timeZone: "Africa/Lagos",
-            weekday: "short"
-        }
-    ).format(new Date());
+    const day = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Africa/Lagos",
+        weekday: "short"
+    }).format(new Date());
 
     return day === "Sat";
 }
 
-
-/*
-==========================================================
-ELEMENTS
-==========================================================
-*/
-
-const form =
-    document.getElementById("registrationForm");
-
-const payButton =
-    document.getElementById("payButton");
-
-const message =
-    document.getElementById("formMessage");
-
-const year =
-    document.getElementById("year");
-
-year.textContent =
-    new Date().getFullYear();
-
-
-/*
-==========================================================
-MESSAGE
-==========================================================
-*/
-
-function showMessage(text, error = false) {
-
-    message.textContent = text;
-
-    message.className =
-        "status show" +
-        (error ? " error" : "");
-}
-
-
-/*
-==========================================================
-FORM SUBMISSION
-==========================================================
-*/
-
-form.addEventListener(
-    "submit",
-    function(event) {
-
+if (form) {
+    form.addEventListener("submit", function(event) {
         event.preventDefault();
 
-
-        /*
-        Check that the form is complete.
-        */
-
+        // Validate the registration form
         if (!form.reportValidity()) {
             return;
         }
 
-
-        /*
-        Check Saturday.
-        */
-
+        // Allow access to the payment page only on Saturdays
         if (!isSaturdayInNigeria()) {
-
             showMessage(
                 "Payments are only available on Saturdays.",
                 true
             );
-
             return;
         }
 
+        // Open the configured Paystack payment page
+        window.location.href = PAYSTACK_PAYMENT_PAGE;
+    });
+}
 
-        /*
-        Check Payment Page URL.
-        */
+// Terms and risk disclosure modal
+const modal = document.getElementById("termsModal");
+const openTerms = document.getElementById("openTerms");
+const closeTerms = document.getElementById("closeTerms");
 
-        if (
-            !PAYSTACK_PAYMENT_PAGE ||
-            PAYSTACK_PAYMENT_PAGE.includes(
-                "https://paystack.shop/pay/3aos9ebc-k"
-            )
-        ) {
+if (modal && openTerms && closeTerms) {
+    openTerms.addEventListener("click", function(event) {
+        event.preventDefault();
+        modal.classList.add("open");
+    });
 
-            showMessage(
-                "Paystack payment page has not been configured yet.",
-                true
-            );
+    closeTerms.addEventListener("click", function() {
+        modal.classList.remove("open");
+    });
 
-            return;
-        }
-
-
-        /*
-        Disable button while redirecting.
-        */
-
-        payButton.disabled = true;
-
-        payButton.textContent =
-            "OPENING PAYSTACK...";
-
-
-        /*
-        Send customer to Paystack.
-        */
-
-        window.location.href =
-            PAYSTACK_PAYMENT_PAGE;
-
-    }
-);
-
-
-/*
-==========================================================
-TERMS MODAL
-==========================================================
-*/
-
-const modal =
-    document.getElementById("termsModal");
-
-document
-    .getElementById("openTerms")
-    .addEventListener(
-        "click",
-        function(event) {
-
-            event.preventDefault();
-
-            modal.classList.add("open");
-
-        }
-    );
-
-
-document
-    .getElementById("closeTerms")
-    .addEventListener(
-        "click",
-        function() {
-
-            modal.classList.remove("open");
-
-        }
-    );
-
-
-modal.addEventListener(
-    "click",
-    function(event) {
-
+    modal.addEventListener("click", function(event) {
         if (event.target === modal) {
-
             modal.classList.remove("open");
-
         }
+    });
 
-    }
-);
-
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
+    document.addEventListener("keydown", function(event) {
         if (event.key === "Escape") {
-
             modal.classList.remove("open");
-
         }
-
-    }
-);
-
+    });
+}
 </script>
 
 </body>
